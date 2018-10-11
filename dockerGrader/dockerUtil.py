@@ -96,7 +96,7 @@ def containerStatus(containerId):
         return None, None
 
 def rmContainer(containerId):
-    forceRmCmd = ["docker", "rm", "-f", containerId]
+    forceRmCmd = ["docker", "container", "rm", "-f", containerId]
     try:
         subprocess.check_output(forceKillCmd)
     except:
@@ -146,9 +146,7 @@ def dockerRun(project, netId):
            '-u', str(currentUID),                     # run as local user (instead of root)
            '-w', '/code',                             # working dir is w/ code
            image,                                     # what docker image?
-           'python3', 'test.py',
-           '-p', project,
-           '-i', netId]                      # command to run inside
+           'python3', 'test.py']                      # command to run inside
     logging.info("docker cmd:" + ' '.join(cmd))
     containerId = subprocess.check_output(cmd).decode("ascii").replace("\n","")
     logging.info("container id:" + containerId)
